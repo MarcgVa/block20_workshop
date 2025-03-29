@@ -9,7 +9,8 @@
 // State
 const state = {
   'odd': [],
-  'even': []
+  'even': [],
+  'sort': 'ascending',
 };
 
 const toBeSorted = [];
@@ -17,6 +18,7 @@ const form = document.querySelector("form");
 const sortOne = document.getElementById("sortOne");
 const sortAll = document.getElementById("sortAll");
 const btnRandom = document.getElementById("random-number");
+const selection = document.getElementById("sort-direction");
 
 function print(id,value) { 
   const output = document.querySelector(`#${id} output`);
@@ -35,8 +37,16 @@ function sortNumbers(all) {
       n % 2 === 0 ? state.even.push(n) : state.odd.push(n);
     toBeSorted.shift();
   }
-  state.even.sort((a, b) => a - b);
-  state.odd.sort((a, b) => a - b);
+
+  if (state.sort === 'ascending') {
+    state.even.sort((a, b) => a - b);
+    state.odd.sort((a, b) => a - b);
+  } else if (state.sort === 'descending') {
+    state.even.sort((a, b) => b - a);
+    state.odd.sort((a, b) => b - a);    
+  }
+
+  render()
 }
 
 function checkForNumbers(input) {
@@ -61,7 +71,7 @@ form.addEventListener("submit", (e) => {
   const numToAdd = [];
   data.get("number").replace(",", "").split("").forEach((e) => numToAdd.push(e));
   checkForNumbers(numToAdd).forEach((e) => {
-    console.log(e);
+    // console.log(e);
     toBeSorted.push(e);
   });
   render();
@@ -70,13 +80,16 @@ form.addEventListener("submit", (e) => {
 
 sortOne.addEventListener("click", (e) => {
   sortNumbers();
-  render()
 })
 sortAll.addEventListener("click", (e) => {
   sortNumbers(true);
-  render();
 });
 btnRandom.addEventListener("click", (e) => {
   toBeSorted.push(Math.floor(Math.random() * 20));
   render();
+})
+
+selection.addEventListener('change', (e) => {
+  state.sort = selection.options[selection.selectedIndex].text.toLowerCase();
+  // console.log(state.sort);
 })
