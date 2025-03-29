@@ -57,7 +57,6 @@ function sortNumbers(all) {
 
 //Validating and pulling only valid number from user input
 function checkForNumbers(input) {
-  const numArray = [];
   input.forEach((e) => {
     if (!isNaN(e)) {
       toBeSorted.push(e * 1);
