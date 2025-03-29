@@ -23,24 +23,27 @@ const selection = document.getElementById("sort-direction");
 
 
 // Functions
-function print(id,value) { 
+
+function print(id, value) { 
   const output = document.querySelector(`#${id} output`);
   output.innerHTML = value;
 }
 
 function sortNumbers(all) {
+  
   if (toBeSorted.length <= 0) { return; }
+  
   if (all) {
     toBeSorted.forEach((e) =>
       e % 2 === 0 ? state.even.push(e) : state.odd.push(e)
     );  
     toBeSorted.length = 0;  //clear array after all numbers are sorted
   } else {
-    const n = toBeSorted[0]
-      n % 2 === 0 ? state.even.push(n) : state.odd.push(n);
-    toBeSorted.shift();
+    const n = toBeSorted[0];
+    n % 2 === 0 ? state.even.push(n) : state.odd.push(n);
+    toBeSorted.shift(); 
   }
-
+  
   if (state.sort === 'ascending') {
     state.even.sort((a, b) => a - b);
     state.odd.sort((a, b) => a - b);
@@ -52,14 +55,14 @@ function sortNumbers(all) {
   render()
 }
 
+//Validating and pulling only valid number from user input
 function checkForNumbers(input) {
   const numArray = [];
   input.forEach((e) => {
     if (!isNaN(e)) {
-      numArray.push(e * 1);
+      toBeSorted.push(e * 1);
     }
   });
-  return numArray;
 }
 
 function render() {
@@ -70,16 +73,13 @@ function render() {
 
 
 // Event Listeners
- //The add number button
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const data = new FormData(e.target);
   const numToAdd = [];
   data.get("number").replace(",", "").split("").forEach((e) => numToAdd.push(e));
-  checkForNumbers(numToAdd).forEach((e) => {
-    // console.log(e);
-    toBeSorted.push(e);
-  });
+  checkForNumbers(numToAdd);
   render();
   number.value = "";
 });
@@ -87,6 +87,7 @@ form.addEventListener("submit", (e) => {
 sortOne.addEventListener("click", (e) => {
   sortNumbers();
 })
+
 sortAll.addEventListener("click", (e) => {
   sortNumbers(true);
 });
@@ -98,5 +99,4 @@ btnRandom.addEventListener("click", (e) => {
 
 selection.addEventListener('change', (e) => {
   state.sort = selection.options[selection.selectedIndex].text.toLowerCase();
-  // console.log(state.sort);
 })
