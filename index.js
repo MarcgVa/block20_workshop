@@ -13,6 +13,7 @@ const state = {
   'sort': 'ascending',
 };
 
+// Global variables
 const toBeSorted = [];
 const form = document.querySelector("form");
 const sortOne = document.getElementById("sortOne");
@@ -20,6 +21,8 @@ const sortAll = document.getElementById("sortAll");
 const btnRandom = document.getElementById("random-number");
 const selection = document.getElementById("sort-direction");
 
+
+// Functions
 function print(id,value) { 
   const output = document.querySelector(`#${id} output`);
   output.innerHTML = value;
@@ -65,6 +68,9 @@ function render() {
   print("numberBank", toBeSorted);
 }
 
+
+// Event Listeners
+ //The add number button
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const data = new FormData(e.target);
@@ -84,6 +90,7 @@ sortOne.addEventListener("click", (e) => {
 sortAll.addEventListener("click", (e) => {
   sortNumbers(true);
 });
+
 btnRandom.addEventListener("click", (e) => {
   toBeSorted.push(Math.floor(Math.random() * 20));
   render();
