@@ -34,8 +34,8 @@ function sortNumbers(all) {
   if (state.toBeSorted.length <= 0) { return; }
   
   if (all) {
-    state.toBeSorted.forEach((e) =>
-      e % 2 === 0 ? state.even.push(e) : state.odd.push(e)
+    state.toBeSorted.forEach((n) =>
+      n % 2 === 0 ? state.even.push(n) : state.odd.push(n)
     );  
     state.toBeSorted.length = 0;  //clear array after all numbers are sorted
   } else {
