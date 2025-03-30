@@ -10,11 +10,11 @@
 const state = {
   'odd': [],
   'even': [],
+  'toBeSorted': [], 
   'sort': 'ascending',
 };
 
 // Global variables
-const toBeSorted = [];
 const form = document.querySelector("form");
 const sortOne = document.getElementById("sortOne");
 const sortAll = document.getElementById("sortAll");
@@ -31,17 +31,17 @@ function print(id, value) {
 
 function sortNumbers(all) {
   
-  if (toBeSorted.length <= 0) { return; }
+  if (state.toBeSorted.length <= 0) { return; }
   
   if (all) {
-    toBeSorted.forEach((e) =>
+    state.toBeSorted.forEach((e) =>
       e % 2 === 0 ? state.even.push(e) : state.odd.push(e)
     );  
-    toBeSorted.length = 0;  //clear array after all numbers are sorted
+    state.toBeSorted.length = 0;  //clear array after all numbers are sorted
   } else {
-    const n = toBeSorted[0];
+    const n = state.toBeSorted[0];
     n % 2 === 0 ? state.even.push(n) : state.odd.push(n);
-    toBeSorted.shift(); 
+    state.toBeSorted.shift(); 
   }
   
   if (state.sort === 'ascending') {
@@ -59,7 +59,7 @@ function sortNumbers(all) {
 function checkForNumbers(input) {
   input.forEach((e) => {
     if (!isNaN(e)) {
-      toBeSorted.push(e * 1);
+      state.toBeSorted.push(e * 1);
     }
   });
 }
@@ -67,7 +67,7 @@ function checkForNumbers(input) {
 function render() {
   print('odds', state.odd);
   print('evens', state.even);
-  print("numberBank", toBeSorted);
+  print("numberBank", state.toBeSorted);
 }
 
 
@@ -92,7 +92,7 @@ sortAll.addEventListener("click", (e) => {
 });
 
 btnRandom.addEventListener("click", (e) => {
-  toBeSorted.push(Math.floor(Math.random() * 20));
+  state.toBeSorted.push(Math.floor(Math.random() * 20));
   render();
 })
 
